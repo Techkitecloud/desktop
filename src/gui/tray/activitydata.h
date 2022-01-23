@@ -76,10 +76,16 @@ public:
         QString path;    // Required (for files only)
         QUrl link;    // Optional (files only)
     };
+    
+    struct TalkNotificationData {
+        QString conversationToken{};
+        QString messageId{};
+    };
 
     Type _type;
     qlonglong _id;
     QString _fileAction;
+    TalkNotificationData _talkNotification;
     QString _objectType;
     QString _subject;
     QString _subjectRich;
