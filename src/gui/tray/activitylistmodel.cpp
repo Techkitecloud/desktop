@@ -73,6 +73,8 @@ QHash<int, QByteArray> ActivityListModel::roleNames() const
     roles[DisplayActions] = "displayActions";
     roles[ShareableRole] = "isShareable";
     roles[IsCurrentUserFileActivityRole] = "isCurrentUserFileActivity";
+    roles[TalkConversationTokenRole] = "conversationToken";
+    roles[TalkMessageIdRole] = "messageId";
     return roles;
 }
 
@@ -280,9 +282,17 @@ QVariant ActivityListModel::data(const QModelIndex &index, int role) const
     case DisplayActions:
         return _displayActions;
     case ShareableRole:
+<<<<<<< HEAD
         return !data(index, PathRole).toString().isEmpty() && a._objectType == QStringLiteral("files") && _displayActions && a._fileAction != "file_deleted" && a._status != SyncFileItem::FileIgnored;
     case IsCurrentUserFileActivityRole:
         return a._isCurrentUserFileActivity;
+=======
+        return !data(index, PathRole).toString().isEmpty() && _displayActions && a._fileAction != "file_deleted" && a._status != SyncFileItem::FileIgnored;
+    case TalkConversationTokenRole:
+        return a._talkNotification.conversationToken;
+    case TalkMessageIdRole:
+        return a._talkNotification.messageId;
+>>>>>>> 5a51de371 (Add talk token and messageId to data roles in ActivityListModel.)
     default:
         return QVariant();
     }
@@ -609,7 +619,7 @@ void ActivityListModel::slotTriggerAction(const int activityIndex, const int act
         Utility::openBrowser(QUrl(action._link));
         return;
     }
-
+    
     emit sendNotificationRequest(activity._accName, action._link, action._verb, activityIndex);
 }
 
