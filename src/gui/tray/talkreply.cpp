@@ -1,5 +1,6 @@
 #include "talkreply.h"
 #include "accountstate.h"
+#include "systray.h"
 
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -13,7 +14,7 @@ TalkReply::TalkReply(AccountState *accountState, QObject *parent)
     : QObject(parent)
     , _accountState(accountState)
 {
-    
+    connect(Systray::instance(), &Systray::sendChatMessage, this, &TalkReply::sendChatMessage);
 }
 
 int TalkReply::lastMessageId(const QString &chatToken) const

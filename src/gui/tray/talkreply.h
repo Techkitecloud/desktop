@@ -10,6 +10,7 @@ namespace OCC {
 class Activity;
 class JsonApiJob;
 class AccountState;
+class Systray;
 
 class TalkReply : public QObject
 {
