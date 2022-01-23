@@ -9,6 +9,8 @@ class QJsonDocument;
 
 namespace OCC {
 
+class TalkReply;
+
 class ServerNotificationHandler : public QObject
 {
     Q_OBJECT
@@ -29,6 +31,7 @@ private slots:
 private:
     QPointer<JsonApiJob> _notificationJob;
     AccountState *_accountState;
+    QPointer<TalkReply> _talkReply;
 };
 }
 

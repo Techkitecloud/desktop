@@ -5,6 +5,7 @@
 #include "networkjobs.h"
 
 #include "iconjob.h"
+#include "talkreply.h"
 
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -22,6 +23,7 @@ ServerNotificationHandler::ServerNotificationHandler(AccountState *accountState,
     : QObject(parent)
     , _accountState(accountState)
 {
+    _talkReply = new TalkReply(accountState);
 }
 
 void ServerNotificationHandler::slotFetchNotifications()
@@ -100,6 +102,17 @@ void ServerNotificationHandler::slotNotificationsReceived(const QJsonDocument &j
 
         //need to know, specially for remote_share
         a._objectType = json.value("object_type").toString();
+        
+        // server 24: notification type chat contains conversationToken/messageId in object_type
+        if (a._objectType == "chat" || a._objectType == "call") {
+            const auto objectId = json.value("object_id").toString();
+            const auto objectIdData = objectId.split("/");
+            a._talkNotification.conversationToken = objectIdData.first();
+            if (a._objectType == "chat") {
+                a._talkNotification.messageId = objectIdData.last();
+            }
+        } 
+        
         a._status = 0;
 
         a._subject = json.value("subject").toString();
