@@ -29,6 +29,7 @@ QtObject {
     property int trayWindowRadius: 10
     property int trayWindowBorderWidth: 1
     property int trayWindowHeaderHeight: variableSize(60)
+    property int trayWindowNotificationHeight: variableSize(75)
 
     property int currentAccountButtonWidth: 220
     property int currentAccountButtonRadius: 2

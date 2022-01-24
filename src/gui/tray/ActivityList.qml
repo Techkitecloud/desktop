@@ -36,6 +36,7 @@ ScrollView {
         delegate: ActivityItem {
             isFileActivityList: controlRoot.isFileActivityList
             width: activityList.contentWidth
+            //height: Style.trayWindowNotificationHeight
             flickable: activityList
             onClicked: {
                 if (model.isCurrentUserFileActivity) {
