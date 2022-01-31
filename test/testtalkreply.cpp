@@ -68,20 +68,24 @@ private slots:
 
     }
     
-    void testSendChatMessage_noReplyToSet_returnsCorrectMessageId()
+    void testSendChatMessage_noReplyToSet_messageIsSent()
     {
-        talkReply->sendChatMessage(QStringLiteral("abc123"), QStringLiteral("test message"));
-        QSignalSpy messageSent(talkReply.data(), &OCC::TalkReply::messageSent);
-        QVERIFY(messageSent.wait());        
-        QCOMPARE(talkReply->lastMessageSentId(), 11);
-    }
-    
-    void testSendChatMessage_replyToSet_returnsCorrectMessageId()
-    {
-        talkReply->sendChatMessage(QStringLiteral("abc123"), QStringLiteral("test message 2"), QStringLiteral("11"));
+        const auto message = QStringLiteral("test message");
+        talkReply->sendChatMessage(QStringLiteral("abc123"), message);
         QSignalSpy messageSent(talkReply.data(), &OCC::TalkReply::messageSent);
         QVERIFY(messageSent.wait());
-        QCOMPARE(talkReply->lastMessageSentId(), 12);
+        QList<QVariant> arguments = messageSent.takeFirst();
+        QVERIFY(arguments.at(0).toString() == message);
+    }
+    
+    void testSendChatMessage_replyToSet_messageIsSent()
+    {
+        const auto message = QStringLiteral("test message 2");
+        talkReply->sendChatMessage(QStringLiteral("abc123"), message, QStringLiteral("11"));
+        QSignalSpy messageSent(talkReply.data(), &OCC::TalkReply::messageSent);
+        QVERIFY(messageSent.wait());
+        QList<QVariant> arguments = messageSent.takeFirst();
+        QVERIFY(arguments.at(0).toString() == message);
     }
 };
 

@@ -1,6 +1,5 @@
 #include "talkreply.h"
 #include "accountstate.h"
-#include "systray.h"
 
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -14,43 +13,6 @@ TalkReply::TalkReply(AccountState *accountState, QObject *parent)
     : QObject(parent)
     , _accountState(accountState)
 {
-    connect(Systray::instance(), &Systray::sendChatMessage, this, &TalkReply::sendChatMessage);
-}
-
-int TalkReply::lastMessageId(const QString &chatToken) const
-{
-    Q_UNUSED(chatToken);
-    
-    if (_userMessagesList.size() == 0) {
-        qCWarning(lcTalkReply) << "There are no messages for this user.";
-        return 0;
-    }
-    
-    for (const QJsonValue &value : _userMessagesList) {
-        auto room = value.toObject();
-        if (room.value("token").toString() != chatToken) {
-            continue;
-        }
-        
-        const auto lastMessage = room.value("lastMessage").toObject();
-        if (lastMessage.value("actorType").toString() == QStringLiteral("bots")) {
-            return 0;
-        }
-        
-        return lastMessage.value("id").toInt();
-    }
-    
-    return _userMessageId;
-}
-
-int TalkReply::lastMessageSentId() const
-{
-    return _lastMessageSentId;
-}
-
-QJsonArray TalkReply::userMessagesList() const
-{
-    return _userMessagesList;
 }
 
 void TalkReply::sendChatMessage(const QString &token, const QString &message, const QString &replyTo)
@@ -74,8 +36,6 @@ void TalkReply::sendChatMessage(const QString &token, const QString &message, co
         sender()->deleteLater();
         
         const auto responseObj = response.object().value("ocs").toObject().value("data").toObject();
-        _lastMessageSentId = responseObj.value("id").toInt();
-        
         emit messageSent(responseObj.value("message").toString());
     });
 
