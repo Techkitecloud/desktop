@@ -15,6 +15,7 @@
 #include "tray/activitylistmodel.h"
 #include "tray/notificationcache.h"
 #include "tray/unifiedsearchresultslistmodel.h"
+#include "tray/talkreply.h"
 #include "userstatusconnector.h"
 
 #include <QDesktopServices>
@@ -72,8 +73,8 @@ User::User(AccountStatePtr &account, const bool &isCurrent, QObject *parent)
     connect(_account->account().data(), &Account::accountChangedAvatar, this, &User::avatarChanged);
     connect(_account->account().data(), &Account::userStatusChanged, this, &User::statusChanged);
     connect(_account.data(), &AccountState::desktopNotificationsAllowedChanged, this, &User::desktopNotificationsAllowedChanged);
-
-    connect(_activityModel, &ActivityListModel::sendNotificationRequest, this, &User::slotSendNotificationRequest);
+    
+    connect(this, &User::sendChatMessage, this, &User::sendTalkReply);
 }
 
 void User::showDesktopNotification(const QString &title, const QString &message)
@@ -723,6 +724,12 @@ void User::removeAccount() const
 {
     AccountManager::instance()->deleteAccount(_account.data());
     AccountManager::instance()->save();
+}
+
+void User::sendTalkReply(const QString &token, const QString &message, const QString &replyTo){
+    auto *talkReply = new TalkReply(_account.data());
+    //connect(talkReply, &TalkReply::messageSent, this, &User::messageSent);
+    talkReply->sendChatMessage(token, message, replyTo);
 }
 
 /*-------------------------------------------------------------------------------------*/

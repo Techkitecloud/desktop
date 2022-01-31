@@ -90,7 +90,6 @@ signals:
     void showWindow();
     void openShareDialog(const QString &sharePath, const QString &localPath);
     void showFileActivityDialog(const QString &sharePath, const QString &localPath);
-    void sendChatMessage(const QString &token, const QString &message, const QString &replyTo);
 
 public slots:
     void slotNewUserSelected();

@@ -20,7 +20,7 @@ ColumnLayout {
             return;
         }
         rectangleInput.border.color = Style.menuBorder;
-        Systray.sendChatMessage(model.conversationToken, talkMessage.text, model.messageId);
+        UserModel.currentUser.sendChatMessage(model.conversationToken, talkMessage.text, model.messageId);
         talkMessageSent.text = talkMessage.text;
         talkMessage.clear();
         rectangleInput.visible = false
@@ -46,14 +46,13 @@ ColumnLayout {
             height: activityTextInfo.height
             width: parent.width
             onAccepted: sendMessage()
-            onTextEdited: talkMessage.text = placeholderText.text
             leftPadding: 4
             anchors.verticalCenter: parent.verticalCenter 
             Text {
                 id: placeholderText
                 text: qsTr("I will join the chat in 5")
                 color: Style.menuBorder
-                visible: talkMessage.text === ""
+                visible: talkMessage.text === "" && talkMessage.activeFocus
                 width: parent.width
                 height: parent.height
             }

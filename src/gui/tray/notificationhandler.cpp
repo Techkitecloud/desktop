@@ -5,7 +5,6 @@
 #include "networkjobs.h"
 
 #include "iconjob.h"
-#include "talkreply.h"
 
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -23,7 +22,6 @@ ServerNotificationHandler::ServerNotificationHandler(AccountState *accountState,
     : QObject(parent)
     , _accountState(accountState)
 {
-    _talkReply = new TalkReply(accountState);
 }
 
 void ServerNotificationHandler::slotFetchNotifications()
