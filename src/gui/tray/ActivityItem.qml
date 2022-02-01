@@ -56,6 +56,16 @@ MouseArea {
 
             onShareButtonClicked: Systray.openShareDialog(model.displayPath, model.absolutePath)
             onDismissButtonClicked: activityModel.slotTriggerDismiss(model.index)
+                                            
+//            Loader {
+//                id: talkReplyLoader
+//                active: (model.objectType === "chat" || model.objectType === "call")
+                
+//                sourceComponent: TalkReply {
+//                    id: talkReply
+//                }                           
+//            }
+
         }
 
         ActivityItemActions {

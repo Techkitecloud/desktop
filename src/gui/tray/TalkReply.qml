@@ -7,7 +7,6 @@ import com.nextcloud.desktopclient 1.0
 ColumnLayout {
     id: talkLayout
     spacing: 0
-    visible: (model.objectType === "chat" || model.objectType === "call")
     
     Layout.fillWidth: true        
     Layout.fillHeight: true        
