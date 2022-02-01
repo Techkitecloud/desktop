@@ -74,7 +74,7 @@ User::User(AccountStatePtr &account, const bool &isCurrent, QObject *parent)
     connect(_account->account().data(), &Account::userStatusChanged, this, &User::statusChanged);
     connect(_account.data(), &AccountState::desktopNotificationsAllowedChanged, this, &User::desktopNotificationsAllowedChanged);
     
-    connect(this, &User::sendChatMessage, this, &User::sendTalkReply);
+    connect(this, &User::sendChatMessage, this, &User::slotSendChatMessage);
 }
 
 void User::showDesktopNotification(const QString &title, const QString &message)
@@ -726,7 +726,7 @@ void User::removeAccount() const
     AccountManager::instance()->save();
 }
 
-void User::sendTalkReply(const QString &token, const QString &message, const QString &replyTo){
+void User::slotSendChatMessage(const QString &token, const QString &message, const QString &replyTo){
     auto *talkReply = new TalkReply(_account.data());
     //connect(talkReply, &TalkReply::messageSent, this, &User::messageSent);
     talkReply->sendChatMessage(token, message, replyTo);

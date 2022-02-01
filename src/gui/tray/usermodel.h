@@ -68,7 +68,7 @@ public:
     QString statusMessage() const;
     QUrl statusIcon() const;
     QString statusEmoji() const;
-    void processCompletedSyncItem(const Folder *folder, const SyncFileItemPtr &item);
+    void processCompletedSyncItem(const Folder *folder, const SyncFileItemPtr &item);    
     
 signals:
     void guiLog(const QString &, const QString &);
@@ -80,7 +80,6 @@ signals:
     void statusChanged();
     void desktopNotificationsAllowedChanged();
     void sendChatMessage(const QString &token, const QString &message, const QString &replyTo);
-    void testSent();
 
 public slots:
     void slotItemCompleted(const QString &folder, const SyncFileItemPtr &item);
@@ -100,7 +99,7 @@ public slots:
     void slotRefreshImmediately();
     void setNotificationRefreshInterval(std::chrono::milliseconds interval);
     void slotRebuildNavigationAppList();
-    void sendTalkReply(const QString &token, const QString &message, const QString &replyTo);
+    void slotSendChatMessage(const QString &token, const QString &message, const QString &replyTo);
 
 private:
     void slotPushNotificationsReady();
