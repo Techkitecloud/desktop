@@ -37,7 +37,7 @@ ColumnLayout {
         height: 24
         border.width: 1
         border.color: Style.menuBorder
-        radius: 3
+        radius: 22
         clip: true
         TextInput {
             id: talkMessage
