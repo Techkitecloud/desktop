@@ -45,15 +45,18 @@ ColumnLayout {
             height: activityTextInfo.height
             width: parent.width
             onAccepted: sendMessage()
+            topPadding: 4
             leftPadding: 4
             anchors.verticalCenter: parent.verticalCenter 
             Text {
                 id: placeholderText
-                text: qsTr("I will join the chat in 5")
+                text: qsTr("Reply to ...")
                 color: Style.menuBorder
-                visible: talkMessage.text === "" && talkMessage.activeFocus
+                visible: talkMessage.text === ""
                 width: parent.width
                 height: parent.height
+                leftPadding: 4
+                anchors.verticalCenter: parent.verticalCenter 
             }
         }    
         Button {
