@@ -73,6 +73,15 @@ RowLayout {
             font.pixelSize: Style.subLinePixelSize
             color: "#808080"
         }
+        
+        Loader {
+            id: talkReplyLoader
+            active: UserModel.currentUser.serverHasTalk && 
+                    (model.objectType === "chat" || model.objectType === "call")
+            sourceComponent: TalkReply {
+                id: talkReply
+            }                           
+        }
     }
 
     Button {
